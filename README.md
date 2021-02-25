@@ -3,4 +3,4 @@
 
 원조 슬롯머신 만들기
 
-https://www.online-casinos.com/slots/history/
+https://www.notion.so/2678126b7d4f40f9acc65bcd862e5539
