@@ -6,15 +6,15 @@ using System.Linq;
 public static class Util
 {
     #region Strings
-    private static Dictionary<CardSymbol, string> symbolStrings = new Dictionary<CardSymbol, string>()
+    private static Dictionary<CardSuit, string> _suitStrings = new Dictionary<CardSuit, string>()
     {
-        { CardSymbol.Club, "클로버" },
-        { CardSymbol.Diamond, "다이아몬드" },
-        { CardSymbol.Heart, "하트" },
-        { CardSymbol.Spade, "스페이드" },
+        { CardSuit.Club, "클로버" },
+        { CardSuit.Diamond, "다이아몬드" },
+        { CardSuit.Heart, "하트" },
+        { CardSuit.Spade, "스페이드" },
     };
 
-    private static Dictionary<CardRank, string> rankStrings = new Dictionary<CardRank, string>()
+    private static Dictionary<CardRank, string> _rankStrings = new Dictionary<CardRank, string>()
     {
         { CardRank.Two, "2" },
         { CardRank.Three, "3" },
@@ -32,20 +32,22 @@ public static class Util
     };
     #endregion
 
-    public static string GetSymbolString(CardSymbol symbol)
+    private static Dictionary<string, Sprite> _cardSprites = new Dictionary<string, Sprite>();
+
+    public static string GetSymbolString(CardSuit suit)
     {
-        if (symbolStrings.TryGetValue(symbol, out var str))
+        if (_suitStrings.TryGetValue(suit, out var str))
         {
             return str;
         }
 
-        Debug.LogWarning($"Symbol {symbol}에 대응하는 텍스트가 없음");
+        Debug.LogWarning($"Symbol {suit}에 대응하는 텍스트가 없음");
         return "?";
     }
 
     public static string GetRankString(CardRank rank)
     {
-        if (rankStrings.TryGetValue(rank, out var str))
+        if (_rankStrings.TryGetValue(rank, out var str))
         {
             return str;
         }
@@ -69,5 +71,23 @@ public static class Util
         T tmp = list[indexA];
         list[indexA] = list[indexB];
         list[indexB] = tmp;
+    }
+
+    public static Sprite GetCardFrontSrite(Card card)
+    {
+        Sprite sprite = null;
+        var spriteName = card.ToSpriteString();
+        if (_cardSprites.TryGetValue(spriteName, out sprite))
+        {
+            return sprite;
+        }
+
+        string path = $"Sprites";
+        sprite = Resources.LoadAll<Sprite>(path)
+            .SingleOrDefault(s => s.name == spriteName);
+
+        _cardSprites.Add(spriteName, sprite);
+
+        return sprite;
     }
 }

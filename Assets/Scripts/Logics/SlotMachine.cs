@@ -10,8 +10,8 @@ public class SlotMachine
 
     public Drum[] Drums = new Drum[DRUM_COUNT];
 
-    private readonly Card SPADE_TEN = new Card(CardSymbol.Spade, CardRank.Ten);
-    private readonly Card HEART_JACK = new Card(CardSymbol.Heart, CardRank.Jack);
+    private readonly Card SPADE_TEN = new Card(CardSuit.Spade, CardRank.Ten);
+    private readonly Card HEART_JACK = new Card(CardSuit.Heart, CardRank.Jack);
 
     public SlotMachine()
     {

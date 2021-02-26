@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public enum CardSymbol
+public enum CardSuit
 {
     None,
 
@@ -34,20 +34,20 @@ public enum CardRank
 
 public struct Card : IComparable<Card>
 {
-    public CardSymbol Symbol;
+    public CardSuit Suit;
     public CardRank Rank;
 
     public int Value
     {
         get
         {
-            return CardToValue(Symbol, Rank);
+            return GetCardValue(Suit, Rank);
         }
     }
 
-    public Card(CardSymbol symbol, CardRank rank)
+    public Card(CardSuit suit, CardRank rank)
     {
-        Symbol = symbol;
+        Suit = suit;
         Rank = rank;
     }
 
@@ -55,26 +55,31 @@ public struct Card : IComparable<Card>
     {
         if (value < 1 || value > 52)
         {
-            Symbol = CardSymbol.None;
+            Suit = CardSuit.None;
             Rank = CardRank.None;
         }
         else
         {
-            Symbol = (CardSymbol)((value - 1) % 4 + 1);
+            Suit = (CardSuit)((value - 1) % 4 + 1);
             Rank = (CardRank)((value - 1) / 4 + 1);
         }
     }
 
-    public static int CardToValue(CardSymbol symbol, CardRank rank)
+    public static int GetCardValue(CardSuit suit, CardRank rank)
     {
         int baseValue = ((int)rank - 1) * 4;
-        int addValue = (int)symbol - 1;
+        int addValue = (int)suit - 1;
         return baseValue + addValue;
     }
 
     public override string ToString()
     {
-        return $"{Util.GetSymbolString(Symbol)} {Util.GetRankString(Rank)}";
+        return $"{Util.GetSymbolString(Suit)} {Util.GetRankString(Rank)}";
+    }
+
+    public string ToSpriteString()
+    {
+        return $"{Suit}_{Rank}";
     }
 
     public int CompareTo(Card other)
