@@ -45,7 +45,7 @@ public class SpriteTest : Test
         for (int value = 1; value <= 52; value++)
         {
             Card card = new Card(value);
-            if (Util.GetCardFrontSrite(card) == null)
+            if (Util.GetCardFrontSprite(card) == null)
             {
                 Debug.Log($"SpriteTest Fail: {card}");
                 return false;

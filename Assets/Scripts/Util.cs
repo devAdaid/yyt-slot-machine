@@ -56,6 +56,12 @@ public static class Util
         return "?";
     }
 
+    public static Card GetRandomCard()
+    {
+        int value = Random.Range(0, 52);
+        return new Card(value + 1);
+    }
+
     public static void Shuffle<T>(this List<T> list)
     {
         int count = list.Count;
@@ -73,7 +79,7 @@ public static class Util
         list[indexB] = tmp;
     }
 
-    public static Sprite GetCardFrontSrite(Card card)
+    public static Sprite GetCardFrontSprite(Card card)
     {
         Sprite sprite = null;
         var spriteName = card.ToSpriteString();
